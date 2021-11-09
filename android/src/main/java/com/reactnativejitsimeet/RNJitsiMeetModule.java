@@ -56,7 +56,7 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
                     RNJitsiMeetConferenceOptions options = new RNJitsiMeetConferenceOptions.Builder()
                             .setRoom(url)
                             .setAudioOnly(false)
-                            .setUserInfo(_userInfo)
+                            .setUserInfo(_userInfo);
 
                     ReadableMapKeySetIterator iterator = featureFlags.keySetIterator();
                     while (iterator.hasNextKey()) {
@@ -97,14 +97,13 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
                     RNJitsiMeetConferenceOptions options = new RNJitsiMeetConferenceOptions.Builder()
                             .setRoom(url)
                             .setAudioOnly(true)
-                            .setUserInfo(_userInfo)
-
+                            .setUserInfo(_userInfo);
+                            
                     ReadableMapKeySetIterator iterator = featureFlags.keySetIterator();
                     while (iterator.hasNextKey()) {
                         String key = iterator.nextKey();
                         optionsBuilder.setFeatureFlag(key, featureFlags.getBoolean(key));
                     }
-                    
                     mJitsiMeetViewReference.getJitsiMeetView().join(options);
                 }
             }
