@@ -1,7 +1,6 @@
 package com.reactnativejitsimeet;
 
 import android.util.Log;
-import android.content.Intent;
 import java.net.URL;
 import java.net.MalformedURLException;
 
@@ -12,8 +11,6 @@ import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 @ReactModule(name = RNJitsiMeetModule.MODULE_NAME)
 public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
@@ -133,9 +130,7 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    Intent muteBroadcastIntent = new Intent(BroadcastAction.Type.SET_AUDIO_MUTED.getAction());
-                    muteBroadcastIntent.putExtra("muted", isMuted);
-                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(muteBroadcastIntent);
+                    mJitsiMeetViewReference.getJitsiMeetView().setListener('SET_AUDIO_MUTED');
                 }
             }
         });
@@ -147,9 +142,7 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    Intent muteBroadcastIntent = new Intent(BroadcastAction.Type.SET_VIDEO_MUTED.getAction());
-                    muteBroadcastIntent.putExtra("muted", isMuted);
-                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(muteBroadcastIntent);
+                    mJitsiMeetViewReference.getJitsiMeetView().setListener('SET_AUDIO_MUTED');
                 }
             }
         });
