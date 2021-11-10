@@ -12,6 +12,7 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.uimanager.events.RCTEventEmitter;
 
 
 @ReactModule(name = RNJitsiMeetModule.MODULE_NAME)
