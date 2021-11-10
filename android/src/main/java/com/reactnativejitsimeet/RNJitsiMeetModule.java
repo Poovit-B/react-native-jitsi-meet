@@ -123,4 +123,28 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             }
         });
     }
+    
+    @ReactMethod
+    public void setAudioMuted(Boolean isMuted) {
+        UiThreadUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
+                    mJitsiMeetViewReference.getJitsiMeetView().setListener('SET_AUDIO_MUTED',isMuted);
+                }
+            }
+        });
+    }
+    
+    @ReactMethod
+    public void setVideoMuted(Boolean isMuted) {
+        UiThreadUtil.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
+                    mJitsiMeetViewReference.getJitsiMeetView().setListener('SET_AUDIO_MUTED',isMuted);
+                }
+            }
+        });
+    }
 }
