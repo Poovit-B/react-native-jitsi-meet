@@ -11,20 +11,15 @@ import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.uimanager.events.RCTEventEmitter;
-
 
 @ReactModule(name = RNJitsiMeetModule.MODULE_NAME)
 public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
     public static final String MODULE_NAME = "RNJitsiMeetModule";
     private IRNJitsiMeetViewReference mJitsiMeetViewReference;
-    private ReactApplicationContext mReactContext;
 
     public RNJitsiMeetModule(ReactApplicationContext reactContext, IRNJitsiMeetViewReference jitsiMeetViewReference) {
         super(reactContext);
         mJitsiMeetViewReference = jitsiMeetViewReference;
-        mReactContext = reactContext;
     }
 
     @Override
@@ -135,9 +130,8 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    mReactContext.getJSModule(RCTEventEmitter.class).sendBroadcast(
-                    "SET_AUDIO_MUTED",
-                    isMuted);
+                    Log.d("JitsiMeet ==========> ", "setAudioMuted : 133" );
+                    mJitsiMeetViewReference.getJitsiMeetView().setAudioMuted(isMuted);
                 }
             }
         });
@@ -149,9 +143,8 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    mReactContext.getJSModule(RCTEventEmitter.class).sendBroadcast(
-                    "SET_VIDEO_MUTED",
-                    isMuted);
+                    Log.d("JitsiMeet ==========> ", "setAudioMuted : 146");
+                    mJitsiMeetViewReference.getJitsiMeetView().setAudioMuted(isMuted);
                 }
             }
         });

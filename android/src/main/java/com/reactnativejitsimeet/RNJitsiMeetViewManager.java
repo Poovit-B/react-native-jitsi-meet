@@ -1,4 +1,5 @@
 package com.reactnativejitsimeet;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -68,6 +69,19 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
                 mJitsiMeetViewReference.getJitsiMeetView().getId(),
                 "conferenceWillJoin",
                 event);
+    }
+
+     public void setAudioMuted(Boolean isMuted) {
+        Log.d("JitsiMeet ==========> ", "setAudioMuted");
+        mReactContext.getJSModule(RCTEventEmitter.class).sendBroadcast(
+                "SET_AUDIO_MUTED",
+                isMuted);
+        // WritableMap event = Arguments.createMap();
+        // event.putString("url", (String) data.get("url"));
+        // mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+        //         mJitsiMeetViewReference.getJitsiMeetView().getId(),
+        //         "conferenceWillJoin",
+        //         event);
     }
 
     public Map getExportedCustomBubblingEventTypeConstants() {
