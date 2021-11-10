@@ -130,7 +130,9 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    mJitsiMeetViewReference.getJitsiMeetView().setListener('SET_AUDIO_MUTED',isMuted);
+                    Intent muteBroadcastIntent = new Intent(BroadcastAction.Type.SET_AUDIO_MUTED.getAction());
+                    muteBroadcastIntent.putExtra("muted", isMuted);
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(muteBroadcastIntent);
                 }
             }
         });
@@ -142,7 +144,9 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    mJitsiMeetViewReference.getJitsiMeetView().setListener('SET_AUDIO_MUTED',isMuted);
+                    Intent muteBroadcastIntent = new Intent(BroadcastAction.Type.SET_VIDEO_MUTED.getAction());
+                    muteBroadcastIntent.putExtra("muted", isMuted);
+                    LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(muteBroadcastIntent);
                 }
             }
         });
