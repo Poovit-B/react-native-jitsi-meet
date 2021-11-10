@@ -131,7 +131,7 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
                     Log.d("JitsiMeet ==========> ", "setAudioMuted : 133" );
-                    mJitsiMeetViewReference.getJitsiMeetView().getListener();
+                    mJitsiMeetViewReference.getJitsiMeetView().setViewAudioMuted(isMuted);
                 }
             }
         });
@@ -144,7 +144,7 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
                     Log.d("JitsiMeet ==========> ", "setAudioMuted : 146");
-                    mJitsiMeetViewReference.getJitsiMeetView().getListener();
+                    mJitsiMeetViewReference.getJitsiMeetView().setViewAudioMuted(isMuted);
                 }
             }
         });

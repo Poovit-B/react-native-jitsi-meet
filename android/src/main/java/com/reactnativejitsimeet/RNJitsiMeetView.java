@@ -106,6 +106,10 @@ public class RNJitsiMeetView extends BaseReactView<JitsiMeetViewListener>
         JitsiMeetLogger.e("PiP not supported");
     }
 
+    public void setViewAudioMuted(Boolean isMuted) {
+        JitsiMeetLogger.e("110 : setViewAudioMuted");
+    }
+
     /**
      * Joins the conference specified by the given {@link RNJitsiMeetConferenceOptions}. If there is
      * already an active conference, it will be left and the new one will be joined.
