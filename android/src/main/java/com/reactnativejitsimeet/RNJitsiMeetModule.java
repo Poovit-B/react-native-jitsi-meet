@@ -134,10 +134,9 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    mReactContext.getJSModule(RCTEventEmitter.class).sentEvent(
+                    mReactContext.getJSModule(RCTEventEmitter.class).sendBroadcast(
                     "SET_AUDIO_MUTED",
-                    isMuted,
-                    );
+                    isMuted);
                 }
             }
         });
@@ -149,10 +148,9 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    mReactContext.getJSModule(RCTEventEmitter.class).sentEvent(
+                    mReactContext.getJSModule(RCTEventEmitter.class).sendBroadcast(
                     "SET_VIDEO_MUTED",
-                    isMuted,
-                    );
+                    isMuted);
                 }
             }
         });
