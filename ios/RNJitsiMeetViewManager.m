@@ -90,19 +90,6 @@ RCT_EXPORT_METHOD(endCall)
     });
 }
 
-RCT_EXPORT_METHOD(setAudioMuted)
-{
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [jitsiMeetView setAudioMuted];
-    });
-}
-
-RCT_EXPORT_METHOD(setVideoMuted)
-{
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        [jitsiMeetView setVideoMuted];
-    });
-}
 
 #pragma mark JitsiMeetViewDelegate
 
