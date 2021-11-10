@@ -1,6 +1,7 @@
 package com.reactnativejitsimeet;
 
 import android.util.Log;
+import android.content.Intent;
 import java.net.URL;
 import java.net.MalformedURLException;
 
@@ -11,6 +12,8 @@ import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 @ReactModule(name = RNJitsiMeetModule.MODULE_NAME)
 public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
