@@ -90,6 +90,23 @@ RCT_EXPORT_METHOD(endCall)
     });
 }
 
+RCT_EXPORT_METHOD(setAudioMuted:(BOOL *)isMuted)
+{
+    RCTLogInfo(@"setAudioMuted", isMuted);
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [jitsiMeetView setAudioMuted:isMuted];
+    });
+}
+
+RCT_EXPORT_METHOD(setVideoMuted:(BOOL *)isMuted)
+{
+    RCTLogInfo(@"setVideoMuted", isMuted);
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        [jitsiMeetView setVideoMuted:isMuted];
+    });
+}
+
+
 
 #pragma mark JitsiMeetViewDelegate
 
