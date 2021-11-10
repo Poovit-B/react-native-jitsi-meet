@@ -72,10 +72,10 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
     }
 
      public void setAudioMuted(Boolean isMuted) {
-        Log.d("JitsiMeet ==========> ", "setAudioMuted");
-        mReactContext.getJSModule(RCTEventEmitter.class).sendBroadcast(
-                "SET_AUDIO_MUTED",
-                isMuted);
+        Log.d("JitsiMeet ==========> ", "setAudioMuted : 75");
+        // mReactContext.getJSModule(RCTEventEmitter.class).sendBroadcast(
+        //         "SET_AUDIO_MUTED",
+        //         isMuted);
         // WritableMap event = Arguments.createMap();
         // event.putString("url", (String) data.get("url"));
         // mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
