@@ -1,8 +1,12 @@
 package com.reactnativejitsimeet;
 
 import android.util.Log;
+import android.content.Intent;
+import android.content.IntentFilter;
+
 import java.net.URL;
 import java.net.MalformedURLException;
+
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -11,6 +15,9 @@ import com.facebook.react.bridge.UiThreadUtil;
 import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+
+import org.jitsi.meet.sdk.BroadcastIntentHelper;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 @ReactModule(name = RNJitsiMeetModule.MODULE_NAME)
 public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
@@ -130,8 +137,8 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    Log.d("JitsiMeet ==========> ", "setAudioMuted : 133" );
-                    mJitsiMeetViewReference.getJitsiMeetView().setViewAudioMuted(isMuted);
+                    Intent muteBroadcastIntent = BroadcastIntentHelper.buildSetAudioMutedIntent(isMuted);
+                    LocalBroadcastManager.getInstance(getReactApplicationContext()).sendBroadcast(muteBroadcastIntent);
                 }
             }
         });
@@ -143,8 +150,8 @@ public class RNJitsiMeetModule extends ReactContextBaseJavaModule {
             @Override
             public void run() {
                 if (mJitsiMeetViewReference.getJitsiMeetView() != null) {
-                    Log.d("JitsiMeet ==========> ", "setAudioMuted : 146");
-                    mJitsiMeetViewReference.getJitsiMeetView().setViewAudioMuted(isMuted);
+                    Intent muteBroadcastIntent = BroadcastIntentHelper.buildSetVideoMutedIntent(isMuted);
+                    LocalBroadcastManager.getInstance(getReactApplicationContext()).sendBroadcast(muteBroadcastIntent); 
                 }
             }
         });
