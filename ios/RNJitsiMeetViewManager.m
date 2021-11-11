@@ -148,7 +148,7 @@ RCT_EXPORT_METHOD(setVideoMuted:(BOOL *)isMuted)
     jitsiMeetView.onEnteredPip(data);
 }
 
-- (void)enterPictureInPicture:(NSDictionary *)data {
+- (void)audioMutedChanged:(NSDictionary *)data {
     RCTLogInfo(@"audioMutedChanged");
     if (!jitsiMeetView.audioMutedChanged) {
         return;
@@ -157,7 +157,7 @@ RCT_EXPORT_METHOD(setVideoMuted:(BOOL *)isMuted)
     jitsiMeetView.audioMutedChanged(data);
 }
 
-- (void)enterPictureInPicture:(NSDictionary *)data {
+- (void)videoMutedChanged:(NSDictionary *)data {
     RCTLogInfo(@"videoMutedChanged");
     if (!jitsiMeetView.videoMutedChanged) {
         return;
