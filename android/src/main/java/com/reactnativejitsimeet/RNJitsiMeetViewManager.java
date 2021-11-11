@@ -69,7 +69,7 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
         intentFilter.addAction(type.getAction());
         }
 
-        LocalBroadcastManager.getInstance(jitsiMeetViewInterface.getJitsiMeetView().getContext()).registerReceiver(broadcastReceiver, intentFilter);
+        LocalBroadcastManager.getInstance(mJitsiMeetViewReference.getJitsiMeetView().getContext()).registerReceiver(broadcastReceiver, intentFilter);
     }
 
     private void onBroadcastReceived(Intent intent) {
@@ -85,7 +85,7 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
             eventMap.putString("url", (String) event.getData().get("url"));
             eventMap.putString("error", (String) event.getData().get("error"));
             mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                jitsiMeetViewInterface.getJitsiMeetView().getId(),
+                mJitsiMeetViewReference.getJitsiMeetView().getId(),
                 "conferenceJoined",
                 eventMap);
             break;
@@ -96,14 +96,14 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
             eventMap.putString("url", (String) event.getData().get("url"));
             eventMap.putString("error", (String) event.getData().get("error"));
             mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                jitsiMeetViewInterface.getJitsiMeetView().getId(),
+                mJitsiMeetViewReference.getJitsiMeetView().getId(),
                 "conferenceTerminated",
                 eventMap);
 
             Intent hangupBroadcastIntent = BroadcastIntentHelper.buildHangUpIntent();
-            LocalBroadcastManager.getInstance(jitsiMeetViewInterface.getJitsiMeetView().getContext()).sendBroadcast(hangupBroadcastIntent);
+            LocalBroadcastManager.getInstance(mJitsiMeetViewReference.getJitsiMeetView().getContext()).sendBroadcast(hangupBroadcastIntent);
 
-            jitsiMeetViewInterface.getJitsiMeetView().dispose();
+            mJitsiMeetViewReference.getJitsiMeetView().dispose();
             break;
 
             case CONFERENCE_WILL_JOIN:
@@ -112,7 +112,7 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
             eventMap.putString("url", (String) event.getData().get("url"));
             eventMap.putString("error", (String) event.getData().get("error"));
             mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                jitsiMeetViewInterface.getJitsiMeetView().getId(),
+                mJitsiMeetViewReference.getJitsiMeetView().getId(),
                 "conferenceWillJoin",
                 eventMap);
             break;
@@ -123,7 +123,7 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
             eventMap.putString("muted", (String) event.getData().get("muted"));
             eventMap.putString("error", (String) event.getData().get("error"));
             mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                jitsiMeetViewInterface.getJitsiMeetView().getId(),
+                mJitsiMeetViewReference.getJitsiMeetView().getId(),
                 "audioMuted",
                 eventMap);
             break;
@@ -134,7 +134,7 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
             eventMap.putString("muted", (String) event.getData().get("muted"));
             eventMap.putString("error", (String) event.getData().get("error"));
             mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                jitsiMeetViewInterface.getJitsiMeetView().getId(),
+                mJitsiMeetViewReference.getJitsiMeetView().getId(),
                 "videoMuted",
                 eventMap);
             break;
