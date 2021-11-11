@@ -61,6 +61,16 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
                 event);
     }
 
+    public void onConferenceWillJoin(Map<String, Object> data) {
+        WritableMap event = Arguments.createMap();
+        event.putString("url", (String) data.get("url"));
+        mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                mJitsiMeetViewReference.getJitsiMeetView().getId(),
+                "conferenceWillJoin",
+                event);
+    }
+
+
     public void onAudioMutedChanged(Map<String, Object> data) {
         WritableMap event = Arguments.createMap();
         event.putString("url", (String) data.get("url"));
@@ -69,7 +79,8 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
                 "audioMuted",
                 event);
     }
-        public void onVideoMutedChanged(Map<String, Object> data) {
+    
+    public void onVideoMutedChanged(Map<String, Object> data) {
         WritableMap event = Arguments.createMap();
         event.putString("url", (String) data.get("url"));
         mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
