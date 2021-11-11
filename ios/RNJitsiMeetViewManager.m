@@ -11,8 +11,8 @@ RCT_EXPORT_VIEW_PROPERTY(onConferenceJoined, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onConferenceTerminated, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onConferenceWillJoin, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onEnteredPip, RCTBubblingEventBlock)
-RCT_EXPORT_VIEW_PROPERTY(audioMutedChanged, RCTBubblingEventBlock)
-RCT_EXPORT_VIEW_PROPERTY(videoMutedChanged, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onAudioMutedChanged, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onVideoMutedChanged, RCTBubblingEventBlock)
 
 - (UIView *)view
 {
@@ -150,20 +150,20 @@ RCT_EXPORT_METHOD(setVideoMuted:(BOOL *)isMuted)
 
 - (void)audioMutedChanged:(NSDictionary *)data {
     RCTLogInfo(@"audioMutedChanged");
-    if (!jitsiMeetView.audioMutedChanged) {
+    if (!jitsiMeetView.onAudioMutedChanged) {
         return;
     }
 
-    jitsiMeetView.audioMutedChanged(data);
+    jitsiMeetView.onAudioMutedChanged(data);
 }
 
 - (void)videoMutedChanged:(NSDictionary *)data {
     RCTLogInfo(@"videoMutedChanged");
-    if (!jitsiMeetView.videoMutedChanged) {
+    if (!jitsiMeetView.onVideoMutedChanged) {
         return;
     }
 
-    jitsiMeetView.videoMutedChanged(data);
+    jitsiMeetView.onVideoMutedChanged(data);
 }
 
 @end
