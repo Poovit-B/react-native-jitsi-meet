@@ -34,8 +34,8 @@ import timber.log.Timber;
 
 import static org.webrtc.ContextUtils.getApplicationContext;
 
-
-public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView>  {
+@ReactModule(name = RNJitsiMeetViewManager.REACT_CLASS)
+public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> implements JitsiMeetViewListener {
 
   public static final String REACT_CLASS = "JitsiView";
   private IRNJitsiMeetViewReference mJitsiMeetViewReference;
