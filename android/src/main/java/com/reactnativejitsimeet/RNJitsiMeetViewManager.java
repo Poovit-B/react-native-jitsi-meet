@@ -29,7 +29,7 @@ import timber.log.Timber;
 import static java.security.AccessController.getContext;
 
 @ReactModule(name = RNJitsiMeetViewManager.REACT_CLASS)
-public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> implements JitsiMeetViewListener {
+public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView>  {
     public static final String REACT_CLASS = "RNJitsiMeetView";
     private IRNJitsiMeetViewReference mJitsiMeetViewReference;
     private ReactApplicationContext mReactContext;
