@@ -1,5 +1,11 @@
 package com.reactnativejitsimeet;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
@@ -10,9 +16,15 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.module.annotations.ReactModule;
 
+import org.jitsi.meet.sdk.BroadcastEvent;
+import org.jitsi.meet.sdk.BroadcastIntentHelper;
+import org.jitsi.meet.sdk.JitsiMeet;
+import org.jitsi.meet.sdk.JitsiMeetActivityInterface;
+import org.jitsi.meet.sdk.JitsiMeetView;
 import org.jitsi.meet.sdk.JitsiMeetViewListener;
 
 import java.util.Map;
+import timber.log.Timber;
 
 import static java.security.AccessController.getContext;
 
@@ -39,54 +51,95 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
             view.setListener(this);
             mJitsiMeetViewReference.setJitsiMeetView(view);
         }
+        registerForBroadcastMessages();
         return mJitsiMeetViewReference.getJitsiMeetView();
     }
 
-    public void onConferenceJoined(Map<String, Object> data) {
-        WritableMap event = Arguments.createMap();
-        event.putString("url", (String) data.get("url"));
-        mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                mJitsiMeetViewReference.getJitsiMeetView().getId(),
+    private void registerForBroadcastMessages() {
+        IntentFilter intentFilter = new IntentFilter();
+
+            /* This registers for every possible event sent from JitsiMeetSDK
+            If only some of the events are needed, the for loop can be replaced
+            with individual statements:
+            ex:  intentFilter.addAction(BroadcastEvent.Type.AUDIO_MUTED_CHANGED.getAction());
+                    intentFilter.addAction(BroadcastEvent.Type.CONFERENCE_TERMINATED.getAction());
+                    ... other events
+            */
+        for (BroadcastEvent.Type type : BroadcastEvent.Type.values()) {
+        intentFilter.addAction(type.getAction());
+        }
+
+        LocalBroadcastManager.getInstance(jitsiMeetViewInterface.getJitsiMeetView().getContext()).registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    private void onBroadcastReceived(Intent intent) {
+        if (intent != null) {
+
+        BroadcastEvent event = new BroadcastEvent(intent);
+        WritableMap eventMap = Arguments.createMap();
+
+        switch (event.getType()) {
+            case CONFERENCE_JOINED:
+            Timber.i("Conference Joined with url%s", event.getData().get("url"));
+            eventMap = Arguments.createMap();
+            eventMap.putString("url", (String) event.getData().get("url"));
+            eventMap.putString("error", (String) event.getData().get("error"));
+            mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                jitsiMeetViewInterface.getJitsiMeetView().getId(),
                 "conferenceJoined",
-                event);
-    }
+                eventMap);
+            break;
 
-    public void onConferenceTerminated(Map<String, Object> data) {
-        WritableMap event = Arguments.createMap();
-        event.putString("url", (String) data.get("url"));
-        event.putString("error", (String) data.get("error"));
-        mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                mJitsiMeetViewReference.getJitsiMeetView().getId(),
+            case CONFERENCE_TERMINATED:
+            Timber.i("TERMINATED TERMINATED%s", event.getData().get("url"));
+            eventMap = Arguments.createMap();
+            eventMap.putString("url", (String) event.getData().get("url"));
+            eventMap.putString("error", (String) event.getData().get("error"));
+            mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                jitsiMeetViewInterface.getJitsiMeetView().getId(),
                 "conferenceTerminated",
-                event);
-    }
+                eventMap);
 
-    public void onConferenceWillJoin(Map<String, Object> data) {
-        WritableMap event = Arguments.createMap();
-        event.putString("url", (String) data.get("url"));
-        mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                mJitsiMeetViewReference.getJitsiMeetView().getId(),
+            Intent hangupBroadcastIntent = BroadcastIntentHelper.buildHangUpIntent();
+            LocalBroadcastManager.getInstance(jitsiMeetViewInterface.getJitsiMeetView().getContext()).sendBroadcast(hangupBroadcastIntent);
+
+            jitsiMeetViewInterface.getJitsiMeetView().dispose();
+            break;
+
+            case CONFERENCE_WILL_JOIN:
+            Timber.i("CONFERENCE_WILL_JOIND%s", event.getData().get("url"));
+            eventMap = Arguments.createMap();
+            eventMap.putString("url", (String) event.getData().get("url"));
+            eventMap.putString("error", (String) event.getData().get("error"));
+            mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                jitsiMeetViewInterface.getJitsiMeetView().getId(),
                 "conferenceWillJoin",
-                event);
-    }
+                eventMap);
+            break;
 
-
-    public void onAudioMutedChanged(Map<String, Object> data) {
-        WritableMap event = Arguments.createMap();
-        event.putString("url", (String) data.get("url"));
-        mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                mJitsiMeetViewReference.getJitsiMeetView().getId(),
+            case AUDIO_MUTED_CHANGED:
+            Timber.i("AUDIO_MUTED_CHANGED%s", event.getData().get("muted"));
+            eventMap = Arguments.createMap();
+            eventMap.putString("muted", (String) event.getData().get("muted"));
+            eventMap.putString("error", (String) event.getData().get("error"));
+            mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                jitsiMeetViewInterface.getJitsiMeetView().getId(),
                 "audioMuted",
-                event);
-    }
-    
-    public void onVideoMutedChanged(Map<String, Object> data) {
-        WritableMap event = Arguments.createMap();
-        event.putString("url", (String) data.get("url"));
-        mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                mJitsiMeetViewReference.getJitsiMeetView().getId(),
+                eventMap);
+            break;
+
+            case VIDEO_MUTED_CHANGED:
+            Timber.i("VIDEO_MUTED_CHANGED%s", event.getData().get("muted"));
+            eventMap = Arguments.createMap();
+            eventMap.putString("muted", (String) event.getData().get("muted"));
+            eventMap.putString("error", (String) event.getData().get("error"));
+            mReactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                jitsiMeetViewInterface.getJitsiMeetView().getId(),
                 "videoMuted",
-                event);
+                eventMap);
+            break;
+            }
+        }
     }
 
     public Map getExportedCustomBubblingEventTypeConstants() {
