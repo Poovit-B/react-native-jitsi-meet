@@ -35,14 +35,14 @@ import timber.log.Timber;
 import static org.webrtc.ContextUtils.getApplicationContext;
 
 
-public class RNJitsiViewManager extends SimpleViewManager<RNJitsiMeetView>  {
+public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView>  {
 
   public static final String REACT_CLASS = "JitsiView";
-  private mJitsiMeetViewReference mJitsiMeetViewReference;
+  private IRNJitsiMeetViewReference mJitsiMeetViewReference;
   public String jitsiServerUrl ="https://meet.jit.si";
   private ReactApplicationContext mReactContext;
 
-  public RNJitsiViewManager(ReactApplicationContext reactContext, mJitsiMeetViewReference jitsiMeetViewReference) {
+  public RNJitsiMeetViewManager(ReactApplicationContext reactContext, IRNJitsiMeetViewReference jitsiMeetViewReference) {
     mJitsiMeetViewReference = jitsiMeetViewReference;
     mReactContext = reactContext;
   }
