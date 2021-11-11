@@ -39,6 +39,14 @@ public class RNJitsiMeetViewManager extends SimpleViewManager<RNJitsiMeetView> i
         mReactContext = reactContext;
     }
 
+      private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+        onBroadcastReceived(intent);
+        }
+    };
+
+
     @Override
     public String getName() {
         return REACT_CLASS;
